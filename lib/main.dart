@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'joke_service.dart';
 import 'dart:convert';
 
 void main() => runApp(const MyApp());
@@ -24,12 +25,14 @@ class JokeListPage extends StatefulWidget {
 }
 
 class _JokeListPageState extends State<JokeListPage> {
+  final JokeService _jokeService = JokeService();
   List<Map<String, dynamic>> _jokesRaw = [];
   bool _isLoading = false;
 
   Future<void> _fetchJokes() async {
     setState(() => _isLoading = true);
     try {
+      _jokesRaw = await _jokeService.fetchJokesRaw();
       setState(() => _isLoading = false);
     } catch (e) {
        throw Exception(e);
