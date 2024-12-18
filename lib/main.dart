@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:joke_app/cache.dart';
 import 'joke_service.dart';
 import 'dart:convert';
 
@@ -26,16 +27,34 @@ class JokeListPage extends StatefulWidget {
 
 class _JokeListPageState extends State<JokeListPage> {
   final JokeService _jokeService = JokeService();
+  final Cache _cache = Cache();
   List<Map<String, dynamic>> _jokesRaw = [];
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _cache.initPrefs();
+  }
+
+  // load jokes data from cache
+  void getJokesData() {
+    setState(() {
+      _jokesRaw = _cache.getJokesData();
+    });
+  }
 
   Future<void> _fetchJokes() async {
     setState(() => _isLoading = true);
     try {
       _jokesRaw = await _jokeService.fetchJokesRaw();
+      // save jokes data to cache
+      _cache.saveJokesData(_jokesRaw);
       setState(() => _isLoading = false);
     } catch (e) {
-       throw Exception(e);
+      getJokesData();
+      setState(() => _isLoading = false);
+      throw Exception(e);
     }
   }
 

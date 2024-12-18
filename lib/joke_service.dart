@@ -8,7 +8,7 @@ class JokeService {
     try {
       final response = await _dio.get('$baseUrl/programming',
           queryParameters: {
-            'amount': 3,
+            'amount': 5,
             'type': 'single,twopart',
             'blacklistFlag': 'nsfw,religious,political,racist,sexist,explicit'
           },
