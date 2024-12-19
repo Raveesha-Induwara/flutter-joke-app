@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class CardView {
   Card cardView(jokeJson) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 18),
       elevation: 4,
+      shadowColor: Colors.lightBlue,
+      surfaceTintColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      // color: Colors.yellow,
       child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
